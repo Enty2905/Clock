@@ -6,7 +6,7 @@ public class Main extends JFrame {
     private JTextField textField;
 
     public Main() {
-        setTitle("World Clock!");
+        setTitle("World Clock");
         setSize(300, 100);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -39,8 +39,10 @@ public class Main extends JFrame {
                 throw new NumberFormatException();
             }
             ClockFrame clockFrame = new ClockFrame(timezone);
+            clockFrame.start();
             clockFrame.setVisible(true);
         } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid timezone. Please enter a number between -12 and 12.");
         }
     }
 
