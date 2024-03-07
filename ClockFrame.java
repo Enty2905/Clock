@@ -7,6 +7,7 @@ import java.util.TimeZone;
 public class ClockFrame extends JFrame {
     private JLabel timeLabel;
     private int timezoneOffset;
+    private Thread updateThread;
 
     public ClockFrame(int timezoneOffset) {
         this.timezoneOffset = timezoneOffset;
@@ -17,7 +18,25 @@ public class ClockFrame extends JFrame {
 
         timeLabel = new JLabel();
         updateTime();
+
         add(timeLabel);
+    }
+
+    public void start() {
+        updateThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    updateTime();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        updateThread.start();
     }
 
     public void updateTime() {
